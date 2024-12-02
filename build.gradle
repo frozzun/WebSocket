@@ -21,6 +21,29 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	/* WebSocket */
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+	/* LomBok */
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	/* MongoDB */
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+	/* Redis */
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	/* RabbitMQ */
+	implementation 'org.springframework.boot:spring-boot-starter-amqp'  // RabbitMQ 의존성 추가
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+	/* Logging */
+	implementation 'org.springframework.boot:spring-boot-starter-logging'
+
+	/* thymeleaf */
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
 
 tasks.named('test') {
