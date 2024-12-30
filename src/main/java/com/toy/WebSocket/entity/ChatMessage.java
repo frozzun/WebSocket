@@ -2,9 +2,11 @@ package com.toy.WebSocket.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
+@Document(collation = "chat")
 public class ChatMessage {
   // 메시지 타입 : 입장, 채팅
   public enum MessageType {
