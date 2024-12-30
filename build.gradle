@@ -21,6 +21,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	/* Swagger */
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+
 
 	/* WebSocket */
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
@@ -35,15 +40,22 @@ dependencies {
 	/* Redis */
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-	/* RabbitMQ */
-	implementation 'org.springframework.boot:spring-boot-starter-amqp'  // RabbitMQ 의존성 추가
-	implementation 'com.fasterxml.jackson.core:jackson-databind'
-
 	/* Logging */
 	implementation 'org.springframework.boot:spring-boot-starter-logging'
 
 	/* thymeleaf */
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	/* jwt */
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+
+	/* envers? */
+	implementation 'org.springframework.data:spring-data-envers'
+
+	runtimeOnly 'com.mysql:mysql-connector-j'
 }
 
 tasks.named('test') {

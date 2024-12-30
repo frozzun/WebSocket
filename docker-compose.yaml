@@ -1,18 +1,18 @@
 version: '3.8'
 services:
-  backend:
+  WebSocket:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: WebSocket
+    container_name: backend
     ports:
       - "8080:8080"
     env_file:
       - .env
     environment:
-      SPRING_DATASOURCE_URL: ${DB_URL}
-      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/lawmon
+      SPRING_DATASOURCE_USERNAME: qnlove
+      SPRING_DATASOURCE_PASSWORD: chanyoup1@
       SPRING_DATA_MONGODB_URI: ${SPRING_DATA_MONGODB_URI}  # MongoDB 연결 정보
       SPRING_REDIS_HOST: ${SPRING_REDIS_HOST}  # Redis 연결 정보
       SPRING_REDIS_PORT: ${SPRING_REDIS_PORT}
