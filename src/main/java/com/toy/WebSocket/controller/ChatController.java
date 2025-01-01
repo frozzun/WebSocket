@@ -2,11 +2,9 @@ package com.toy.WebSocket.controller;
 
 import com.toy.WebSocket.dto.ChatMessageDto;
 import com.toy.WebSocket.pubsub.RedisPublisher;
-import com.toy.WebSocket.repository.ChatRoomRepository;
 import com.toy.WebSocket.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 
 @RequiredArgsConstructor
@@ -15,7 +13,7 @@ public class ChatController {
 
   private final RedisPublisher redisPublisher;
   private final ChatRoomService chatRoomService;
-//  private final ChatRoomRepository chatRoomRepository;
+//  private final ChatRoomRedisRepo chatRoomRepository;
 
   /**
    * websocket "/pub/chat/message"로 들어오는 메시징을 처리한다.
