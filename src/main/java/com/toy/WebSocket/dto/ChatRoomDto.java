@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -16,11 +17,4 @@ public class ChatRoomDto implements Serializable {
 
   private String roomId;
   private String name;
-
-  public static ChatRoomDto create(String name) {
-    return ChatRoomDto.builder()
-      .roomId(UUID.randomUUID().toString())
-      .name(name)
-      .build();
-  }
 }

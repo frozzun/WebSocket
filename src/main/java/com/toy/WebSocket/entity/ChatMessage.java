@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Getter
 @Setter
@@ -20,5 +22,5 @@ public class ChatMessage {
   private String message; // 메시지
 
   @Builder.Default
-  private LocalDateTime timestamp = LocalDateTime.now();  // 메시지 전송 시간
+  private LocalDateTime timestamp = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDateTime();  // 메시지 전송 시간
 }

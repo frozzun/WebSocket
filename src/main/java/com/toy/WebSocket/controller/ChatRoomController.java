@@ -52,7 +52,7 @@ public class ChatRoomController {
     model.addAttribute("roomId", roomId);
     return "/chat/roomdetail";
   }
-  // 특정 채팅방 조회
+  // 특정 채팅방 조회 -> 오류 뜸.
   @GetMapping("/room/{roomId}")
   @ResponseBody
   public ChatRoomDto roomInfo(@PathVariable String roomId) {

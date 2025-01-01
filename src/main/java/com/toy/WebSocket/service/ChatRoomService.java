@@ -30,13 +30,13 @@ public class ChatRoomService {
   }
 
   public ChatRoom getRoomById(String id) {
-    // return chatRoomMongoRepo.findRoomById(id);
-    return chatRoomRedisRepo.findRoomById(id);
+     return chatRoomMongoRepo.findByRoomId(id);
+//    return chatRoomRedisRepo.findRoomById(id);
   }
 
   public ChatRoom createChatRoom(String name) {
     ChatRoom chatRoom = ChatRoom.create(name);
-    // chatRoomMongoRepo.save(chatRoom);
+    chatRoomMongoRepo.save(chatRoom);
     chatRoomRedisRepo.saveChatRoom(chatRoom);
     return chatRoom;
   }
