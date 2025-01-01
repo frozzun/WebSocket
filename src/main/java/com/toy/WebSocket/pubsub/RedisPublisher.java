@@ -9,6 +9,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -30,7 +32,7 @@ public class RedisPublisher {
       ChatMessage.builder()
         .type(messageDto.getType())
         .message(messageDto.getMessage())
-        .roomId(messageDto.getSender())
+        .sender(messageDto.getSender())
         .roomId(messageDto.getRoomId())
         .build()
     );

@@ -20,6 +20,6 @@ public class ChatMessageService {
 
   public void addChatMessage(ChatMessage chatMessage) {
     chatMessageRepo.save(chatMessage);
-    log.info("Saved chat message {}", chatMessage.getMessage());
+    log.info("Saved chat message: {}", chatMessage.getMessage());
   }
 }
