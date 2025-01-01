@@ -3,6 +3,7 @@ package com.toy.WebSocket.controller;
 import com.toy.WebSocket.dto.ChatRoomDto;
 import com.toy.WebSocket.entity.ChatRoom;
 import com.toy.WebSocket.repository.ChatRoomRepository;
+import com.toy.WebSocket.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/chat")
 public class ChatRoomController {
 
-  private final ChatRoomRepository chatRoomRepository;
+//  private final ChatRoomRepository chatRoomRepository;
+  private final ChatRoomService chatRoomService;
 
   // 채팅 리스트 화면
   @GetMapping("/room")
@@ -27,7 +29,7 @@ public class ChatRoomController {
   @GetMapping("/rooms")
   @ResponseBody
   public List<ChatRoomDto> room() {
-    List<ChatRoom> chatRooms =  chatRoomRepository.findAllRoom();
+    List<ChatRoom> chatRooms =  chatRoomService.getAllRooms();
     return chatRooms.stream()
       .map(chatRoom -> ChatRoomDto.builder()
         .name(chatRoom.getName())
@@ -39,7 +41,7 @@ public class ChatRoomController {
   @PostMapping("/room")
   @ResponseBody
   public ChatRoomDto createRoom(@RequestParam String name) {
-    ChatRoom chatRoom =  chatRoomRepository.createChatRoom(name);
+    ChatRoom chatRoom =  chatRoomService.createChatRoom(name);
     return ChatRoomDto.builder()
       .name(chatRoom.getName())
       .roomId(chatRoom.getRoomId())
@@ -55,7 +57,7 @@ public class ChatRoomController {
   @GetMapping("/room/{roomId}")
   @ResponseBody
   public ChatRoomDto roomInfo(@PathVariable String roomId) {
-    ChatRoom chatRoom =  chatRoomRepository.findRoomById(roomId);
+    ChatRoom chatRoom =  chatRoomService.getRoomById(roomId);
     return ChatRoomDto.builder()
       .name(chatRoom.getName())
       .roomId(chatRoom.getRoomId())
