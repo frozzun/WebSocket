@@ -30,7 +30,13 @@
     </div>
     <ul class="list-group">
         <li class="list-group-item" v-for="message in messages">
-            {{message.sender}} - {{message.message}}</a>
+<#--새로운 필드 추가-->
+            <div>
+                <strong>{{message.sender}}</strong>
+                <small class="text-muted">({{ formatTimestamp(message.timestamp) }})</small>
+            </div>
+            <div>{{message.message}}</div>
+<#--            -->
         </li>
     </ul>
     <div></div>
@@ -40,6 +46,7 @@
 <script src="/webjars/axios/0.17.1/dist/axios.min.js"></script>
 <script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
     //alert(document.title);
     // websocket & stomp initialize
@@ -62,15 +69,32 @@
             this.findRoom();
         },
         methods: {
+            formatTimestamp: function(timestamp) {
+                const date = new Date(timestamp); // ISO 8601 형식으로 변환된 문자열
+                return date.toLocaleString();     // 로컬 시간 형식으로 변환
+            },
             findRoom: function() {
                 axios.get('/chat/room/'+this.roomId).then(response => { this.room = response.data; });
             },
             sendMessage: function() {
-                ws.send("/pub/chat/message", {}, JSON.stringify({type:'TALK', roomId:this.roomId, sender:this.sender, message:this.message}));
+                ws.send("/pub/chat/message", {}, JSON.stringify({
+                    type:'TALK',
+                    roomId:this.roomId,
+                    sender:this.sender,
+                    message:this.message,
+                    timestamp:this.timestamp
+                }));
                 this.message = '';
             },
             recvMessage: function(recv) {
-                this.messages.unshift({"type":recv.type,"sender":recv.type=='ENTER'?'[알림]':recv.sender,"message":recv.message})
+                recv.timestamp = moment(recv.timestamp).format('YYYY-MM-DD HH:mm:ss');
+                this.messages.unshift({
+                    "type":recv.type,
+                    "sender":recv.type=='ENTER'?'[알림]':recv.sender,
+                    "message":recv.message,
+                    // 새로운 필드 추가
+                    "timestamp": recv.timestamp
+                })
             }
         }
     });

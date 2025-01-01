@@ -2,7 +2,8 @@ package com.toy.WebSocket.service;
 
 import com.toy.WebSocket.entity.ChatRoom;
 import com.toy.WebSocket.pubsub.RedisSubscriber;
-import com.toy.WebSocket.repository.ChatRoomRepository;
+import com.toy.WebSocket.repository.ChatRoomMongoRepo;
+import com.toy.WebSocket.repository.ChatRoomRedisRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
@@ -16,22 +17,27 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ChatRoomService {
 
-  private final ChatRoomRepository chatRoomRepository;
+  private final ChatRoomRedisRepo chatRoomRedisRepo;
+  private final ChatRoomMongoRepo chatRoomMongoRepo;
+
   private final RedisMessageListenerContainer redisMessageListener;
   private final RedisSubscriber redisSubscriber;
   private Map<String, ChannelTopic> topics = new HashMap<>();
 
   public List<ChatRoom> getAllRooms() {
-    return chatRoomRepository.findAllRoom();
+    // return chatRoomMongoRepo.findAll();
+    return chatRoomRedisRepo.findAllRoom();
   }
 
   public ChatRoom getRoomById(String id) {
-    return chatRoomRepository.findRoomById(id);
+     return chatRoomMongoRepo.findByRoomId(id);
+//    return chatRoomRedisRepo.findRoomById(id);
   }
 
   public ChatRoom createChatRoom(String name) {
     ChatRoom chatRoom = ChatRoom.create(name);
-    chatRoomRepository.saveChatRoom(chatRoom);
+    chatRoomMongoRepo.save(chatRoom);
+    chatRoomRedisRepo.saveChatRoom(chatRoom);
     return chatRoom;
   }
 

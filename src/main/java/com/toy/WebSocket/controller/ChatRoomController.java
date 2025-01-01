@@ -2,7 +2,6 @@ package com.toy.WebSocket.controller;
 
 import com.toy.WebSocket.dto.ChatRoomDto;
 import com.toy.WebSocket.entity.ChatRoom;
-import com.toy.WebSocket.repository.ChatRoomRepository;
 import com.toy.WebSocket.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/chat")
 public class ChatRoomController {
 
-//  private final ChatRoomRepository chatRoomRepository;
+//  private final ChatRoomRedisRepo chatRoomRepository;
   private final ChatRoomService chatRoomService;
 
   // 채팅 리스트 화면
@@ -53,7 +52,7 @@ public class ChatRoomController {
     model.addAttribute("roomId", roomId);
     return "/chat/roomdetail";
   }
-  // 특정 채팅방 조회
+  // 특정 채팅방 조회 -> 오류 뜸.
   @GetMapping("/room/{roomId}")
   @ResponseBody
   public ChatRoomDto roomInfo(@PathVariable String roomId) {
