@@ -1,4 +1,4 @@
-package com.toy.WebSocket.dto;
-
-public class UserDto {
-}
+//package com.toy.WebSocket.dto;
+//
+//public class UserDto {
+//}
