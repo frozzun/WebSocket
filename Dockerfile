@@ -1,4 +1,16 @@
-# 1. 베이스 이미지 설정 - Java 21을 사용하여 실행할 것이므로 적절한 JDK 이미지 선택
+# 1. 기본 이미지는 Gradle을 포함한 OpenJDK 21 이미지
+FROM gradle:7.4-jdk21 AS builder
+
+# 2. 작업 디렉토리 설정
+WORKDIR /app
+
+# 3. 프로젝트 파일 복사
+COPY . .
+
+# 4. Gradle 빌드 실행 (build/libs/*.jar로 결과물이 생성)
+RUN gradle build --no-daemon
+
+# 5. 실제 애플리케이션을 실행할 OpenJDK 21 기반 이미지
 FROM bellsoft/liberica-openjdk-alpine:21
 
 # 2. ARG를 사용해 빌드 결과 JAR 파일의 경로를 지정

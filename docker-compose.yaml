@@ -16,7 +16,8 @@ services:
       SPRING_DATA_MONGODB_USERNAME: ${MONGO_USERNAME}
       SPRING_DATA_MONGODB_PASSWORD: ${MONGO_PASSWORD}
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     networks:
       - app-network
 
