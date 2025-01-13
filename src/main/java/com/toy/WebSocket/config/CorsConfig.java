@@ -1,4 +1,4 @@
-package com.toy.WebSocket.config;
-
-public class CorsConfig {
-}
+//package com.toy.WebSocket.config;
+//
+//public class CorsConfig {
+//}
