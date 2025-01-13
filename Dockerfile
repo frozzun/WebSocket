@@ -1,5 +1,5 @@
 # 1. 기본 이미지는 Gradle을 포함한 OpenJDK 21 이미지
-FROM gradle:7.4-jdk21 AS builder
+FROM gradle:7.4-jdk11 AS builder
 
 # 2. 작업 디렉토리 설정
 WORKDIR /app
