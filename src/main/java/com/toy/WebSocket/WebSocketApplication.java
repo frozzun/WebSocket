@@ -9,9 +9,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @SpringBootApplication
 @EnableMongoRepositories(basePackages = "com.toy.WebSocket.repository")
 public class WebSocketApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(WebSocketApplication.class, args);
 	}
-
 }
