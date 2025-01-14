@@ -1,5 +1,5 @@
 # 1. 기본 이미지는 Gradle을 포함한 OpenJDK 21 이미지
-FROM gradle:8.0-jdk17 AS builder
+FROM gradle:8.0-jdk21 AS builder
 
 # 2. 작업 디렉토리 설정
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 # 4. Gradle 빌드 실행 (build/libs/*.jar로 결과물이 생성)
-RUN gradle bootJar --no-daemon
+RUN gradle bootJar --no-daemon --info
 
 # 5. 실제 애플리케이션을 실행할 OpenJDK 21 기반 이미지
 FROM bellsoft/liberica-openjdk-alpine:21
