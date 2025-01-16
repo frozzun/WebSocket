@@ -1,5 +1,6 @@
 # 1. 베이스 이미지 설정 - Java 21을 사용하여 실행할 것이므로 적절한 JDK 이미지 선택
 FROM bellsoft/liberica-openjdk-alpine:21
+LABEL name="frozzun"
 
 # 2. ARG를 사용해 빌드 결과 JAR 파일의 경로를 지정
 ARG JAR_FILE=build/libs/*.jar
