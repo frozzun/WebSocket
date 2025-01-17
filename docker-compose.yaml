@@ -7,6 +7,7 @@ services:
     ports:
       - "8080:8080"
     env_file:
+#      - ../config/.env
       - .env
     environment:
       SPRING_DATASOURCE_URL: ${MYSQL_URL}
@@ -31,6 +32,7 @@ services:
     volumes:
       - db_mysql:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # init.sql 파일 매핑
+#      - /config/init.sql:/docker-entrypoint-initdb.d/init.sql  # 수정된 경로
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "--silent" ]
       interval: 10s
