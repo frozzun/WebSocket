@@ -2,8 +2,8 @@ package com.toy.WebSocket.service;
 
 import com.toy.WebSocket.entity.ChatRoom;
 import com.toy.WebSocket.pubsub.RedisSubscriber;
-import com.toy.WebSocket.repository.ChatRoomMongoRepo;
-import com.toy.WebSocket.repository.ChatRoomRedisRepo;
+import com.toy.WebSocket.repository.mongo.ChatRoomMongoRepo;
+import com.toy.WebSocket.repository.redis.ChatRoomRedisRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
@@ -39,15 +39,6 @@ public class ChatRoomService {
     chatRoomMongoRepo.save(chatRoom);
     chatRoomRedisRepo.saveChatRoom(chatRoom);
     return chatRoom;
-  }
-
-  public void enterChatRoom(String roomId) {
-    ChannelTopic topic = topics.get(roomId);
-    if (topic == null) {
-      topic = new ChannelTopic(roomId);
-      redisMessageListener.addMessageListener(redisSubscriber, topic);
-      topics.put(roomId, topic);
-    }
   }
 
   public ChannelTopic getTopic(String roomId) {

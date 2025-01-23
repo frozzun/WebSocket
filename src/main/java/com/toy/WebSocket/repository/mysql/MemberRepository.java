@@ -1,4 +1,4 @@
-package com.toy.WebSocket.repository;
+package com.toy.WebSocket.repository.mysql;
 
 import com.toy.WebSocket.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

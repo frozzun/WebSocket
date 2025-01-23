@@ -1,4 +1,4 @@
-package com.toy.WebSocket.config;
+package com.toy.WebSocket.config.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
-@EnableMongoRepositories
+@EnableMongoRepositories(basePackages = "com.toy.WebSocket.repository.mongo")
 public class MongoConfig {
   @Autowired
   private MongoMappingContext mongoMappingContext;

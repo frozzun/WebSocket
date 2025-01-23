@@ -1,8 +1,7 @@
 package com.toy.WebSocket.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -11,6 +10,8 @@ import java.time.ZonedDateTime;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ChatMessageDto {
   // 메시지 타입 : 입장, 채팅
   public enum MessageType {
@@ -20,7 +21,4 @@ public class ChatMessageDto {
   private String roomId; // 방번호
   private String sender; // 메시지 보낸사람
   private String message; // 메시지
-
-  @Builder.Default
-  private LocalDateTime timestamp = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDateTime();  // 메시지 전송 시간
 }

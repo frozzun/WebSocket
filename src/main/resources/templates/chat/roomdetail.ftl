@@ -16,16 +16,21 @@
 </head>
 <body>
 <div class="container" id="app" v-cloak>
-    <div>
-        <h2>{{room.name}}</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>{{roomName}}</h3>
+        </div>
+        <div class="col-md-6 text-right">
+            <a class="btn btn-primary btn-sm" href="/logout">로그아웃</a>
+        </div>
     </div>
     <div class="input-group">
         <div class="input-group-prepend">
             <label class="input-group-text">내용</label>
         </div>
-        <input type="text" class="form-control" v-model="message" v-on:keypress.enter="sendMessage">
+        <input type="text" class="form-control" v-model="message" v-on:keypress.enter="sendMessage('TALK')">
         <div class="input-group-append">
-            <button class="btn btn-primary" type="button" @click="sendMessage">보내기</button>
+            <button class="btn btn-primary" type="button" @click="sendMessage('TALK')">보내기</button>
         </div>
     </div>
     <ul class="list-group">
@@ -39,7 +44,6 @@
 <#--            -->
         </li>
     </ul>
-    <div></div>
 </div>
 <!-- JavaScript -->
 <script src="/webjars/vue/2.5.16/dist/vue.min.js"></script>
@@ -58,15 +62,52 @@
         el: '#app',
         data: {
             roomId: '',
-            room: {},
-            sender: '',
+            roomName: '',
             message: '',
-            messages: []
+            messages: [],
+            token:''
         },
         created() {
             this.roomId = localStorage.getItem('wschat.roomId');
-            this.sender = localStorage.getItem('wschat.sender');
-            this.findRoom();
+            this.roomName = localStorage.getItem('wschat.roomName');
+
+            if (!this.roomId || !this.roomName) {
+                alert("잘못된 접근입니다. 채팅방 정보를 확인해주세요.");
+                location.href = "/chat/room"; // 채팅방 목록으로 리다이렉트
+                return;
+            }
+
+            var _this = this;
+
+            axios.get('/chat/user')
+                .then(response => {
+                    _this.token = response.data.token;
+
+                    // 인증 토큰이 없을 경우 처리
+                    if (!_this.token) {
+                        alert("인증 토큰이 없습니다. 다시 로그인하세요.");
+                        location.href = "/login";
+                        return;
+                    }
+
+                    ws.connect({ "token": _this.token }, function(frame) {
+                        ws.subscribe("/sub/chat/room/" + _this.roomId, function(message) {
+                            var recv = JSON.parse(message.body);
+                            _this.recvMessage(recv);
+                        });
+
+                        // 채팅방 입장 메시지 전송
+                        _this.sendMessage('ENTER');
+                    }, function(error) {
+                        alert("서버 연결에 실패하였습니다. 다시 접속해 주십시오.");
+                        location.href = "/chat/room";
+                    });
+                })
+                .catch(error => {
+                    console.error("사용자 정보 가져오기 실패:", error);
+                    alert("사용자 정보를 불러올 수 없습니다. 다시 로그인하세요.");
+                    location.href = "/login";
+                });
         },
         methods: {
             formatTimestamp: function(timestamp) {
@@ -76,21 +117,27 @@
             findRoom: function() {
                 axios.get('/chat/room/'+this.roomId).then(response => { this.room = response.data; });
             },
-            sendMessage: function() {
-                ws.send("/pub/chat/message", {}, JSON.stringify({
-                    type:'TALK',
-                    roomId:this.roomId,
-                    sender:this.sender,
-                    message:this.message,
-                    timestamp:this.timestamp
+            sendMessage: function(type) {
+                if (!type) {
+                    console.error("메시지 타입이 정의되지 않았습니다.");
+                    alert("메시지 타입이 유효하지 않습니다. 다시 시도하세요.");
+                    return;
+                }
+
+                ws.send("/pub/chat/message", {"token": this.token}, JSON.stringify({
+                    type: type, // 함수 인자로 받은 메시지 타입
+                    roomId: this.roomId, // 현재 채팅방 ID
+                    message: this.message, // 입력된 메시지
+                    timestamp: new Date().toISOString() // ISO 8601 형식의 타임스탬프
                 }));
-                this.message = '';
+
+                this.message = ''; // 메시지 전송 후 입력 필드 초기화
             },
             recvMessage: function(recv) {
                 recv.timestamp = moment(recv.timestamp).format('YYYY-MM-DD HH:mm:ss');
                 this.messages.unshift({
                     "type":recv.type,
-                    "sender":recv.type=='ENTER'?'[알림]':recv.sender,
+                    "sender":recv.sender,
                     "message":recv.message,
                     // 새로운 필드 추가
                     "timestamp": recv.timestamp
