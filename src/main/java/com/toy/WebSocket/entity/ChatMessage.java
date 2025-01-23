@@ -23,6 +23,14 @@ public class ChatMessage {
   private String message; // 메시지
 
   @Builder.Default
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  private ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+  private LocalDateTime timestamp = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDateTime();  // 메시지 전송 시간
+
+  public static ChatMessage fromDto(ChatMessageDto messageDto) {
+    return new ChatMessageBuilder()
+      .roomId(messageDto.getRoomId())
+      .sender(messageDto.getSender())
+      .message(messageDto.getMessage())
+      .type(messageDto.getType())
+      .build();
+  }
 }
