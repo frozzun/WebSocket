@@ -1,4 +1,4 @@
-package com.toy.WebSocket.repository;
+package com.toy.WebSocket.repository.mongo;
 
 import com.toy.WebSocket.entity.ChatRoom;
 import org.springframework.data.mongodb.repository.MongoRepository;

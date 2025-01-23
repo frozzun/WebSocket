@@ -1,4 +1,4 @@
-package com.toy.WebSocket.repository;
+package com.toy.WebSocket.repository.mongo;
 
 import com.toy.WebSocket.entity.ChatMessage;
 import org.springframework.data.mongodb.repository.MongoRepository;

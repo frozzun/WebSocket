@@ -1,7 +1,7 @@
 package com.toy.WebSocket.service;
 
 import com.toy.WebSocket.entity.ChatMessage;
-import com.toy.WebSocket.repository.ChatMessageRepo;
+import com.toy.WebSocket.repository.mongo.ChatMessageRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

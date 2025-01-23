@@ -49,18 +49,21 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-//	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 
-//	/* Spring Security */
+	/* SpringSecurity, Jwt */
 //	implementation 'org.springframework.boot:spring-boot-starter-security'
-//	testImplementation 'org.springframework.security:spring-security-test'
 
-	/* JWT */
-	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
-	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
-	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+	implementation 'org.springframework.security:spring-security-core:6.3.5' // 최신 Spring Security 6.x 버전으로 설정
+	implementation 'org.springframework.security:spring-security-config:6.3.5'
+	implementation 'org.springframework.security:spring-security-web:6.3.5'
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
- 	/* dotenv-java */
+	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+	implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.5'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.2' // 사용하는 jackson 버전과 일치하도록 수정
+
+
+	/* dotenv-java */
 	implementation 'io.github.cdimascio:java-dotenv:+'
 }
 

@@ -23,6 +23,7 @@ services:
       - app-network
 
   mysql:
+    hostname: mysql
     container_name: mysql
     image: mysql:latest
     env_file:
@@ -45,6 +46,7 @@ services:
   redis:
     container_name: redis
     image: redis:latest
+    hostname: redis
     ports:
       - "6379:6379"
     volumes:

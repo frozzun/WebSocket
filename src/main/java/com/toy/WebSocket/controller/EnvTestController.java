@@ -2,7 +2,7 @@ package com.toy.WebSocket.controller;
 
 import com.toy.WebSocket.entity.Authority;
 import com.toy.WebSocket.entity.Member;
-import com.toy.WebSocket.repository.MemberRepository;
+import com.toy.WebSocket.repository.mysql.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;

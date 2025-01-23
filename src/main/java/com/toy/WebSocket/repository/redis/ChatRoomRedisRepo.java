@@ -1,4 +1,4 @@
-package com.toy.WebSocket.repository;
+package com.toy.WebSocket.repository.redis;
 
 import com.toy.WebSocket.entity.ChatRoom;
 import jakarta.annotation.PostConstruct;
