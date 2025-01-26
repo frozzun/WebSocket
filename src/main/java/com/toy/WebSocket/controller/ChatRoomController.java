@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/chat")
 public class ChatRoomController {
 
-  //  private final ChatRoomRedisRepo chatRoomRepository;
   private final ChatRoomService chatRoomService;
   private final JwtTokenProvider jwtTokenProvider;
 
@@ -53,6 +52,7 @@ public class ChatRoomController {
       .map(chatRoom -> ChatRoomDto.builder()
         .name(chatRoom.getName())
         .roomId(chatRoom.getRoomId())
+        .userCount(chatRoomService.getUserCount(chatRoom.getRoomId()))
         .build())  // 필요한 필드들로 변환
       .collect(Collectors.toList());
   }
