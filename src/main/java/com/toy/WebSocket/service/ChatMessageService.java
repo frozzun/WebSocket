@@ -9,8 +9,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 import static com.toy.WebSocket.entity.ChatMessage.fromDto;
 
 @Slf4j
@@ -21,17 +19,21 @@ public class ChatMessageService {
   private final RedisTemplate<String, Object> redisTemplate;
   private final ChannelTopic channelTopic;
 
-  public List<ChatMessage> getChatMessages(String roomId) {
-    return chatMessageRepo.findByRoomId(roomId);
-  }
-
-  public void addChatMessage(ChatMessage chatMessage) {
-    chatMessageRepo.save(chatMessage);
-    log.info("Saved chat message: {}", chatMessage.getMessage());
-  }
-
+  /**
+   * 채팅방에 메시지 전송
+   * @param messageDto : message
+   */
   public void publishChatMessage(ChatMessageDto messageDto) {
     ChatMessage message = fromDto(messageDto);
+
+    if (ChatMessageDto.MessageType.ENTER.equals(messageDto.getType())) {
+      messageDto.setMessage(messageDto.getSender() + "님이 방에 입장했습니다.");
+      messageDto.setSender("[알림]");
+    } else if (ChatMessageDto.MessageType.QUIT.equals(messageDto.getType())) {
+      messageDto.setMessage(messageDto.getSender() + "님이 방에서 나갔습니다.");
+      messageDto.setSender("[알림]");
+    }
+
     redisTemplate.convertAndSend(channelTopic.getTopic(), messageDto);
     chatMessageRepo.save(message);
     log.info("Published, saved chat message: {}", message);

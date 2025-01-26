@@ -17,4 +17,5 @@ public class ChatRoomDto implements Serializable {
 
   private String roomId;
   private String name;
+  private long userCount;
 }
