@@ -26,7 +26,6 @@ public class ChatController {
   public void message(ChatMessageDto messageDto, @Header("token") String token) {
     String nickname = jwtTokenProvider.getUserNameFromJwt(token);
     messageDto.setSender(nickname);
-    messageDto.setUserCount(chatRoomService.getUserCount(messageDto.getRoomId()));
 
     chatMessageService.publishChatMessage(messageDto);
     log.info("published Chat Message: {}", messageDto);
