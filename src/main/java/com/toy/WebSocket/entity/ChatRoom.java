@@ -26,8 +26,13 @@ public class ChatRoom implements Serializable {
   @Id
   private String roomId;
   private String name;
+
+  @Builder.Default
   private List<Long> participants = new ArrayList<>(); // 참가자 목록 (User ID)
+
+  @Builder.Default
   private List<String> session= new ArrayList<>(); // 참가한 sessionId 목록
+
   private long userCount;
 //  private String lastMessage; // 마지막 메시지 -> 나중에 추가
   private LocalDateTime createdAt;
