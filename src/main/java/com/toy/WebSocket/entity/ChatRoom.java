@@ -1,7 +1,6 @@
 package com.toy.WebSocket.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,7 +14,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Document("chatroom")
 public class ChatRoom implements Serializable {
 
@@ -36,8 +37,11 @@ public class ChatRoom implements Serializable {
     ChatRoom chatRoom =new ChatRoom();
     chatRoom.roomId = UUID.randomUUID().toString();
     chatRoom.name = name;
+    chatRoom.userCount = 0L;
     chatRoom.createdAt = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDateTime();
     chatRoom.updatedAt = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDateTime();
+    chatRoom.participants = new ArrayList<>();
+    chatRoom.session = new ArrayList<>();
     return chatRoom;
   }
 
