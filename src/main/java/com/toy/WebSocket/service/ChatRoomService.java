@@ -4,26 +4,16 @@ import com.toy.WebSocket.entity.ChatRoom;
 import com.toy.WebSocket.repository.mongo.ChatRoomMongoRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
-/**
- * CHAT_ROOMS: MongoDB 에서 채팅방 정보를 저장하는 키.
- * USER_COUNT: 채팅방에 입장한 유저 수를 저장하는 키. -> mongoDB chatroom 에서 찾기
- * ENTER_INFO: 유저의 세션 ID와 채팅방 ID를 맵핑하여 저장하는 키. -> EnterInfo 에서 찾
- */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class ChatRoomService {
 
   private final ChatRoomMongoRepo chatRoomMongoRepo;
-  private final MongoTemplate mongoTemplate;
 
   public List<ChatRoom> getAllRooms() {
     return chatRoomMongoRepo.findAll();
