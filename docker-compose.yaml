@@ -1,8 +1,8 @@
 services:
   websocket:
-    build:
-      context: .
-      dockerfile: Dockerfile
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
     container_name: backend
     image: frozzun99/websocket:latest
     ports:
